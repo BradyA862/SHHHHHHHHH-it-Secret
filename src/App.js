@@ -1,25 +1,40 @@
-import logo from './logo.svg';
-import './App.css';
+import {useDispatch, useSelector} from "react-redux";
+import Role from "./components/Role";
+import AddProcess from "./components/AddProcess";
+import ListProcesses from "./components/ListProcesses";
+import EditProcess from "./components/EditProcess";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+
+function App({
+                 _useSelector = useSelector,
+                 _useDispatch = useDispatch,
+                 RoleI = Role,
+                 AddProcessI = AddProcess,
+                 ListProcessesI = ListProcesses,
+                 EditProcessI = EditProcess
+             }) {
+    const editor = _useSelector(state => state.editorReducer.editor)
+    const processToEdit = _useSelector(state => state.editorReducer.processToEdit)
+
+
+    if (editor === true) {
+        if (processToEdit)
+            return <>
+                  <EditProcessI process={processToEdit}/>
+            </>
+        return <>
+            <ListProcessesI/>
+        </>
+    }
+    else if (editor === false) {
+        return <h1>follower</h1>
+    }
+    else {
+        return <RoleI/>
+    }
+
+
 }
+
 
 export default App;
