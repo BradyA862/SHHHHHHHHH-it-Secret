@@ -1,36 +1,38 @@
-import {useDispatch, useSelector} from "react-redux";
+import {useSelector} from "react-redux";
 import Process from "./Process";
 import AddProcess from "./AddProcess";
-import {Button, Col} from "react-bootstrap";
-import {getList} from "../modules/editor-reducer";
-// import {getList} from "../modules/editor-reducer";
+import {Col} from "react-bootstrap";
 
 export default function ListProcesses({
                                           _useSelector = useSelector,
                                           ProcessI = Process,
                                           AddProcessI = AddProcess,
-                                          _useDispatch = useDispatch}) {
+                                      }) {
 
-    const dispatch = _useDispatch()
     const processes = _useSelector(state => state.editorReducer.processes)
-    const processToAdd = _useSelector(state => state.editorReducer.processToAdd)
+    const editor = _useSelector(state => state.editorReducer.editor)
 
-    function updateList(event) {
-        event.preventDefault()
-        dispatch(getList())
-        console.log(processes)
+    // function updateList(event) {
+    //     event.preventDefault()
+    //     dispatch(getList())
+    // }
+
+    if (editor === true) {
+        return <div>
+            {<Col><AddProcessI/></Col>}
+            {processes.map(
+                (staticProcess, index) => <div key={index}>
+                    <ProcessI staticProcess={staticProcess}/>
+                </div>)
+            }
+        </div>
+    } else {
+        return <div>
+            {processes.map(
+                (staticProcess, index) => <div key={index}>
+                    <ProcessI staticProcess={staticProcess}/>
+                </div>)
+            }
+        </div>
     }
-
-    return <div>
-        {<Col><AddProcessI/></Col>}
-        {<Col>
-            <Button onClick={updateList}>Update List</Button>
-        </Col>}
-        {processes.map(
-            (staticProcess, index) => <div key={index}>
-                <ProcessI staticProcess={staticProcess}/>
-            </div>)
-        }
-    </div>
-
 }

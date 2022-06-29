@@ -1,7 +1,6 @@
 import {render, screen} from "@testing-library/react";
-import ListProcesses from "./ListProcesses";
+import ListProcesses from "../components/ListProcesses";
 import userEvent from "@testing-library/user-event";
-import {getList} from "../modules/editor-reducer";
 
 it('should show 3 processes', function () {
     const state = {editorReducer: {processes: ['process1', 'process2', 'process3']}}
@@ -14,14 +13,14 @@ it('should show 3 processes', function () {
     expect(screen.getByText(state.editorReducer.processes[2])).toBeInTheDocument()
 });
 
-it('should show AddProcess at the beginning when adding a process', function () {
-    const state = {editorReducer: {processes: ['process1', 'process2', 'process3'], processToAdd: '?'}}
+it('should not show AddProcess at the beginning when follower', function () {
+    const state = {editorReducer: {editor: false, processes: ['process1', 'process2', 'process3'], processToAdd: '?'}}
     const mockProcess = ({staticProcess}) => <div>{staticProcess}</div>
     const addProcessText = 'AddProcess?'
     const mockAddProcess = () => <div>{addProcessText}</div>
     render(<ListProcesses ProcessI={mockProcess} _useSelector={fn => fn(state)}
                           AddProcessI={mockAddProcess} _useDispatch={() => {}}/>)
-    expect(screen.getByText(addProcessText)).toBeInTheDocument()
+    expect(screen.queryByText(addProcessText)).not.toBeInTheDocument()
     expect(screen.getByText(state.editorReducer.processes[0])).toBeInTheDocument()
     expect(screen.getByText(state.editorReducer.processes[1])).toBeInTheDocument()
     expect(screen.getByText(state.editorReducer.processes[2])).toBeInTheDocument()

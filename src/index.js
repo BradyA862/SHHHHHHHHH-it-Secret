@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom/client';
 import App from './App';
 import {applyMiddleware, combineReducers, compose, createStore} from "redux";
 import {Provider} from "react-redux";
-import 'bootstrap/dist/css/bootstrap.min.css'
+import "bootstrap/dist/css/bootstrap.min.css"
 import followerReducer from "./modules/follower-reducer";
 import editorReducer from "./modules/editor-reducer";
 

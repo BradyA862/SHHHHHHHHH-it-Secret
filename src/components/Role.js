@@ -1,6 +1,7 @@
-import {Button} from "react-bootstrap";
+import {Button, Card, Row} from "react-bootstrap";
 import {useDispatch} from "react-redux";
-import {EDITOR} from "../modules/editor-reducer";
+import {EDITOR, getList} from "../modules/editor-reducer";
+import {FOLLOWER} from "../modules/follower-reducer";
 
 
 export default function Role({
@@ -10,10 +11,23 @@ export default function Role({
 
     function handleEditor() {
         dispatch({type: EDITOR})
+        dispatch(getList())
+
     }
 
-    return <>
-        <Button onClick={handleEditor}>Editor</Button>
-        <Button>Follower</Button>
-    </>
+    function handleFollower() {
+        dispatch({type: FOLLOWER})
+        dispatch(getList())
+
+    }
+
+    return <Card style={{borderWidth: 3}}>
+        <Card.Body>Choose A Role</Card.Body>
+        <Row className={'p-3'}>
+            <Button onClick={handleEditor}>Editor</Button>
+        </Row>
+        <Row className={'p-3'}>
+            <Button onClick={handleFollower}>Follower</Button>
+        </Row>
+    </Card>
 }

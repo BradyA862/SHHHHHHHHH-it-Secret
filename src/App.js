@@ -1,40 +1,36 @@
 import {useDispatch, useSelector} from "react-redux";
 import Role from "./components/Role";
-import AddProcess from "./components/AddProcess";
-import ListProcesses from "./components/ListProcesses";
-import EditProcess from "./components/EditProcess";
-
+import Editor from "./components/Editor/Editor";
+import Follower from "./components/Follower/Follower";
 
 function App({
                  _useSelector = useSelector,
                  _useDispatch = useDispatch,
                  RoleI = Role,
-                 AddProcessI = AddProcess,
-                 ListProcessesI = ListProcesses,
-                 EditProcessI = EditProcess
+                 EditorX = Editor,
+                 FollowerX = Follower
              }) {
     const editor = _useSelector(state => state.editorReducer.editor)
-    const processToEdit = _useSelector(state => state.editorReducer.processToEdit)
+    const follower = _useSelector(state => state.followerReducer.follower)
+
+
 
 
     if (editor === true) {
-        if (processToEdit)
-            return <>
-                  <EditProcessI process={processToEdit}/>
-            </>
-        return <>
-            <ListProcessesI/>
-        </>
+        return <EditorX/>
     }
-    else if (editor === false) {
-        return <h1>follower</h1>
+    else if (follower === true) {
+            return <FollowerX/>
+        }
+        else {
+            return <div style={{
+                position: 'absolute', left: '50%', top: '30%',
+                transform: 'translate(-50%, -50%'
+            }}>
+                <RoleI/>
+            </div>
+        }
     }
-    else {
-        return <RoleI/>
-    }
-
-
-}
 
 
 export default App;
