@@ -28,11 +28,51 @@ public class ProcessController {
 
     @GetMapping("/deleteProcess")
     @CrossOrigin
-    void deleteProcess(@RequestParam String title) {service.deleteProcess(title);}
+    void deleteProcess(@RequestParam Long id) {service.deleteProcess(id);}
 
     @GetMapping("/editProcess")
     @CrossOrigin
-    void editProcess(@RequestParam String title, @RequestParam String edit) {service.editProcess(title, edit);}
+    Process editProc(@RequestParam Long id, @RequestParam String edit) {
+        return service.editProcess(id, edit);
+    }
+
+    @GetMapping("/addTextStage")
+    @CrossOrigin
+    void addTextStage(@RequestParam Long id, @RequestParam String textQuestion) {
+        service.addTextStage(id, textQuestion);
+    }
+
+    @GetMapping("/addBooleanStage")
+    @CrossOrigin
+    void addBooleanStage(@RequestParam Long id, @RequestParam String booleanQuestion, @RequestParam String answer1,
+                         @RequestParam String answer2) {
+        service.addBooleanStage(id, booleanQuestion, answer1, answer2);
+    }
+
+    @GetMapping("/addMultStage")
+    @CrossOrigin
+    void addStage(@RequestParam Long id, @RequestParam String multChoiceQuestion, @RequestParam String answer1,
+                  @RequestParam String answer2, @RequestParam String answer3) {
+        service.addMultStage(id, multChoiceQuestion, answer1, answer2, answer3);
+    }
+
+    @GetMapping("/editBooleanStage")
+    @CrossOrigin
+    Stages editBooleanStage(@RequestParam Long id, @RequestParam String editPrompt,
+                            @RequestParam String editAnswer1, @RequestParam String editAnswer2) {
+        return service.editBooleanStage(id, editPrompt, editAnswer1, editAnswer2);
+    }
+
+    @GetMapping("/editMultStage")
+    @CrossOrigin
+    Stages editMultStage(@RequestParam Long id, @RequestParam String editPrompt, @RequestParam String editAnswer1,
+                         @RequestParam String editAnswer2, @RequestParam String editAnswer3) {
+        return service.editMultStage(id, editPrompt, editAnswer1, editAnswer2, editAnswer3);
+    }
+
+    @GetMapping("/deleteStage")
+    @CrossOrigin
+    void deleteStage(@RequestParam Long id) {service.deleteStage(id);}
 
     public void setService(ProcessService service) {
         this.service = service;

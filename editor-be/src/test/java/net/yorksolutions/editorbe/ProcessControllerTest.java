@@ -51,9 +51,9 @@ class ProcessControllerTest {
     @Test
     void it_Should_Return_BAD_REQUEST_When_Title_Doesnt_Exist_When_deleteProcess() {
         final TestRestTemplate rest = new TestRestTemplate();
-        final String title = "some title";
-        String url = "http://localhost:" + port + "/deleteProcess?title=" + title;
-        doThrow(new ResponseStatusException(HttpStatus.ACCEPTED)).when(service).deleteProcess(title);
+        final Long id = 8675309L;
+        String url = "http://localhost:" + port + "/deleteProcess?id=" + id;
+        doThrow(new ResponseStatusException(HttpStatus.ACCEPTED)).when(service).deleteProcess(id);
         final ResponseEntity<Void> response = rest.getForEntity(url, Void.class);
         assertEquals(HttpStatus.ACCEPTED, response.getStatusCode());
     }
@@ -61,29 +61,51 @@ class ProcessControllerTest {
     @Test
     void it_Should_Not_Throw_When_Delete_Process_With_Existing_Title() {
         final TestRestTemplate rest = new TestRestTemplate();
-        final String title = "some title";
-        String url = "http://localhost:" + port + "/deleteProcess?title=" + title;
+        final Long id = 8675309L;
+        String url = "http://localhost:" + port + "/deleteProcess?id=" + id;
         assertDoesNotThrow(() -> rest.getForEntity(url, Void.class));
     }
 
     @Test
-    void it_Should_Return_BAD_REQUEST_When_Title_Doesnt_Exist_When_editProcess() {
+    void it_Should_Not_Throw_When_deleteStage_With_Existing_Id() {
         final TestRestTemplate rest = new TestRestTemplate();
-        final String title = "some title";
-        String url = "http://localhost:" + port + "/editProcess?title=" + title;
-        doThrow(new ResponseStatusException(HttpStatus.ACCEPTED)).when(service).editProcess(title);
+        final Long id = 8675309L;
+        String url = "http://localhost:" + port + "/deleteStage?id=" + id;
+        assertDoesNotThrow(() -> rest.getForEntity(url, Void.class));
+    }
+
+    @Test
+    void it_Should_Throw_BAD_REQUEST_When_Id_doesnt_exist() {
+        final TestRestTemplate rest = new TestRestTemplate();
+        final Long id = 8675309L;
+        String url = "http://localhost:" + port + "/deleteStage?id=" + id;
+        doThrow(new ResponseStatusException(HttpStatus.ACCEPTED)).
+                when(service).deleteStage(id);
         final ResponseEntity<Void> response = rest.getForEntity(url, Void.class);
         assertEquals(HttpStatus.ACCEPTED, response.getStatusCode());
+
     }
 
     @Test
     void it_Should_Not_Throw_When_Edit_Process_With_Existing_Title() {
         final TestRestTemplate rest = new TestRestTemplate();
-        final String title = "some title";
-        String url = "http://localhost:" + port + "/editProcess?title=" + title;
+        final Long id = 8675309L;
+        final String edit = "some edit";
+        String url = "http://localhost:" + port + "/editProcess?id=" + id + "&edit=" + edit;
         assertDoesNotThrow(() -> rest.getForEntity(url, Void.class));
     }
 
-
+    @Test
+    void it_Should_Respond_With_Edited_Process_When_Valid() {
+        final TestRestTemplate rest = new TestRestTemplate();
+        final Long id = 8675309L;
+        final String edit = "some edit";
+        String url = "http://localhost:" + port + "/editProcess?id=" + id + "&edit=" + edit;
+        final Process process = new Process(edit);
+        when(service.editProcess(id, edit)).thenReturn(process);
+        final ResponseEntity<Process> response = rest.getForEntity(url, Process.class);
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertEquals(process, response.getBody());
+    }
 
 }
