@@ -26,7 +26,7 @@ export default function Process({
     }
 
     if (editor === true) {
-        return <Card style={{borderWidth: 2}} className='m-2'>
+        return <Card style={{borderWidth: 2, width: 1000}} className='m-2'>
             <Card.Header>Title: {staticProcess.title}</Card.Header>
             <Card.Footer>
                 <Row>
@@ -41,7 +41,7 @@ export default function Process({
         </Card>
     }
     else {
-        return <Card>
+        return <Card style={{borderWidth: 2, width: 1000}} className='m-2'>
             <Card.Header>Title: {staticProcess.title}</Card.Header>
             <Button onClick={doProcess}>Start</Button>
         </Card>

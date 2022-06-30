@@ -18,12 +18,12 @@ export const EDIT_SUCCESS = 'editor-reducer/EDIT_SUCCESS'
 export const EDIT_FAILURE = 'editor-reducer/EDIT_FAILURE'
 export const EDITOR_LOGOUT = 'editor-reducer/EDITOR_LOGOUT'
 export const ADD_BOOLEAN_STAGE = 'editor-reducer/ADD_BOOLEAN_STAGE'
-// export const SET_STAGE = 'editor-reducer/SET_STAGE'
-// export const CANCEL_EDIT_STAGE = 'editor-reducer/CANCEL_EDIT_STAGE'
-// export const SET_EDIT_STAGE = 'editor-reducer/SET_EDIT_STAGE'
-// export const EDIT_STAGE_START = 'editor-reducer/EDIT_STAGE_START'
-// export const EDIT_STAGE_SUCCESS = 'editor-reducer/EDIT_STAGE_SUCCESS'
-// export const EDIT_STAGE_FAILURE = 'editor-reducer/EDIT_STAGE_FAILURE'
+export const SET_STAGE = 'editor-reducer/SET_STAGE'
+export const CANCEL_EDIT_STAGE = 'editor-reducer/CANCEL_EDIT_STAGE'
+export const SET_EDIT_STAGE = 'editor-reducer/SET_EDIT_STAGE'
+export const EDIT_STAGE_START = 'editor-reducer/EDIT_STAGE_START'
+export const EDIT_STAGE_SUCCESS = 'editor-reducer/EDIT_STAGE_SUCCESS'
+export const EDIT_STAGE_FAILURE = 'editor-reducer/EDIT_STAGE_FAILURE'
 export const PROCESS_STAGE = 'editor-reducer/PROCESS_STAGE'
 export const BOOLEAN_STAGE = 'editor-reducer/BOOLEAN_STAGE'
 export const TEXT_STAGE = 'editor-reducer/TEXT_STAGE'
@@ -292,37 +292,35 @@ export default function editorReducer(state = initialState, action) {
                 addStageProcess: true
             }
 
+        case EDIT_STAGE_START:
+            return {
 
+            }
 
-        // case EDIT_STAGE_START:
-        //     return {
-        //
-        //     }
-        //
-        // case EDIT_STAGE_SUCCESS:
-        //     return {
-        //
-        //     }
-        //
-        // case EDIT_STAGE_FAILURE:
-        //     return {
-        //
-        //     }
-        //
-        // case SET_STAGE:
-        //     return {
-        //
-        //     }
-        //
-        // case SET_EDIT_STAGE:
-        //     return {
-        //
-        //     }
-        //
-        // case CANCEL_EDIT_STAGE:
-        //     return {
-        //
-        //     }
+        case EDIT_STAGE_SUCCESS:
+            return {
+
+            }
+
+        case EDIT_STAGE_FAILURE:
+            return {
+
+            }
+
+        case SET_STAGE:
+            return {
+
+            }
+
+        case SET_EDIT_STAGE:
+            return {
+
+            }
+
+        case CANCEL_EDIT_STAGE:
+            return {
+
+            }
 
 
 
@@ -456,22 +454,22 @@ export function editInit(_fetch = fetch) {
     }
 }
 
-// export function editBooleanStageInit(_fetch = fetch) {
-//     return async function editBooleanSideEffect(dispatch, getState) {
-//         dispatch({type: EDIT_START})
-//         const id = getState().editorReducer.stageToEdit.id
-//         const editPrompt = getState().editorReducer.editedStage.prompt
-//         const editAnswer1 = getState().editorReducer.editedStage.answer1
-//         const editAnswer2 = getState().editorReducer.editedStage.answer2
-//         const url = `http://localhost:8080//editBooleanStage?id=${id}&editPrompt=${editPrompt}&editAnswer1=${editAnswer1}
-//         &editAnswer2=${editAnswer2}`
-//         const response = await _fetch(url)
-//
-//         if (response.ok) {
-//             dispatch({type: EDIT_SUCCESS})
-//         }
-//         else {
-//             dispatch({type: EDIT_FAILURE})
-//         }
-//     }
-// }
+export function editBooleanStageInit(_fetch = fetch) {
+    return async function editBooleanSideEffect(dispatch, getState) {
+        dispatch({type: EDIT_START})
+        const id = getState().editorReducer.stageToEdit.id
+        const editPrompt = getState().editorReducer.edittedStage.prompt
+        const editAnswer1 = getState().editorReducer.edittedStage.answer1
+        const editAnswer2 = getState().editorReducer.edittedStage.answer2
+        const url = `http://localhost:8080//editBooleanStage?id=${id}&editPrompt=${editPrompt}&editAnswer1=${editAnswer1}
+        &editAnswer2=${editAnswer2}`
+        const response = await _fetch(url)
+
+        if (response.ok) {
+            dispatch({type: EDIT_SUCCESS})
+        }
+        else {
+            dispatch({type: EDIT_FAILURE})
+        }
+    }
+}

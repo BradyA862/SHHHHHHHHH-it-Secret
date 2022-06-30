@@ -4,6 +4,7 @@ import EditProcess from "../EditProcess";
 import Logout from "../Logout";
 import AddStage from "../Stages/AddStage";
 import EditorHeader from "./EditorHeader";
+import ViewResponses from "./ViewResponses";
 
 
 export default function Editor({
@@ -12,12 +13,13 @@ export default function Editor({
                                    EditProcessI = EditProcess,
                                    LogoutI = Logout,
                                    AddStageI = AddStage,
-                                   EditorHeaderX = EditorHeader
+                                   EditorHeaderX = EditorHeader,
+                                   ViewResponsesX = ViewResponses
                                }) {
 
     const processToEdit = _useSelector(state => state.editorReducer.processToEdit)
     const stageToAdd = _useSelector(state => state.editorReducer.addStageProcess)
-    const stageToEdit = _useSelector(state => state.editorReducer.stageToEdit)
+    const viewingResp = _useSelector(state => state.followerReducer.viewingResp)
 
     if (stageToAdd === true) {
         return <>
@@ -29,16 +31,25 @@ export default function Editor({
             <EditProcessI process={processToEdit}/>
         </>
     }
-    if (stageToEdit) {
-        return <>
-
-        </>
+    if (viewingResp) {
+        return <div className='d-flex justify-content-center'>
+            <ViewResponsesX/>
+        </div>
     }
-    return <>
-        <EditorHeaderX/>
-        <ListProcessesI/>
-        <LogoutI/>
-        </>
+    // if (stageToEdit) {
+    //     return <>
+    //
+    //     </>
+    // }
+    return <div>
+        <div className='d-flex justify-content-center'>
+            <EditorHeaderX/>
+
+        </div>
+        <div className='d-flex justify-content-center'>
+            <ListProcessesI/>
+        </div>
+    </div>
 
 
 }

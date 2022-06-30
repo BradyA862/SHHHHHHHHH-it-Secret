@@ -1,25 +1,30 @@
 import {useDispatch, useSelector} from "react-redux";
-import {Form, Row} from "react-bootstrap";
+import {Button, Form, Row} from "react-bootstrap";
+import {addResponseInit, CANCEL_DO_PROCESS, EDIT_INPUT} from "../../modules/follower-reducer";
 
 export default function Response({
                                      _useDispatch = useDispatch,
                                      _useSelector = useSelector,
-                                     staticStage,
-                                     promptsToRespond
+                                     staticStage
                                  }) {
-    // const dispatch = _useDispatch()
+    const dispatch = _useDispatch()
 
     const responseToAdd = _useSelector(state => state.followerReducer.responseToAdd)
+    const process = _useSelector(state => state.followerReducer.processToComplete)
 
-    function handleOnChange() {
-
+    function handleOnChange(change) {
+        dispatch({type: EDIT_INPUT, responseToAdd: change})
     }
 
-    function onRespTextChange() {
-
+    function onRespTextChange(change) {
+        dispatch({type: EDIT_INPUT, responseToAdd: change})
     }
 
-    const {stageId, prompt, processId} = promptsToRespond ? promptsToRespond : {}
+    function handleSaveResp() {
+        dispatch(addResponseInit())
+    }
+
+    // const {stageId, prompt, processId} = promptsToRespond ? promptsToRespond : {}
 
     if (staticStage.booleanQuestion !== null) {
         return <Form>
@@ -36,9 +41,10 @@ export default function Response({
                         type='radio'
                         onChange={e => handleOnChange({
                             ...responseToAdd,
-                            stageId: stageId,
-                            processId: processId,
-                            prompt: prompt,
+                            stageId: staticStage.id,
+                            processId: process.id,
+                            processTitle: process.title,
+                            prompt: staticStage.booleanQuestion,
                             responseText: e.target.value
                         })}/>
                     <Form.Check
@@ -49,12 +55,19 @@ export default function Response({
                         type='radio'
                         onChange={e => handleOnChange({
                             ...responseToAdd,
-                            stageId: stageId,
-                            processId: processId,
-                            prompt: prompt,
+                            stageId: staticStage.id,
+                            processId: process.id,
+                            processTitle: process.title,
+                            prompt: staticStage.booleanQuestion,
                             responseText: e.target.value
                         })}/>
                 </div>
+            </Form.Group>
+            <Form.Group>
+                <Button title='Apply' variant={"outline-success"} size='sm'
+                        onClick={handleSaveResp}>Apply</Button>
+                <Button className={'m-3'} title='Cancel' variant={"outline-danger"} size='sm'
+                        onClick={() => dispatch({type: CANCEL_DO_PROCESS})}>Cancel</Button>
             </Form.Group>
         </Form>
     }
@@ -73,9 +86,10 @@ export default function Response({
                         type='radio'
                         onChange={e => handleOnChange({
                             ...responseToAdd,
-                            stageId: stageId,
-                            processId: processId,
-                            prompt: prompt,
+                            stageId: staticStage.id,
+                            processId: process.id,
+                            processTitle: process.title,
+                            prompt: staticStage.multipleChoiceQuestion,
                             responseText: e.target.value
                         })}/>
                     <Form.Check
@@ -86,9 +100,10 @@ export default function Response({
                         type='radio'
                         onChange={e => handleOnChange({
                             ...responseToAdd,
-                            stageId: stageId,
-                            processId: processId,
-                            prompt: prompt,
+                            stageId: staticStage.id,
+                            processId: process.id,
+                            processTitle: process.title,
+                            prompt: staticStage.multipleChoiceQuestion,
                             responseText: e.target.value
                         })}/>
                     <Form.Check
@@ -99,12 +114,19 @@ export default function Response({
                         type='radio'
                         onChange={e => handleOnChange({
                             ...responseToAdd,
-                            stageId: stageId,
-                            processId: processId,
-                            prompt: prompt,
+                            stageId: staticStage.id,
+                            processId: process.id,
+                            processTitle: process.title,
+                            prompt: staticStage.multipleChoiceQuestion,
                             responseText: e.target.value
                         })}/>
                 </div>
+            </Form.Group>
+            <Form.Group>
+                <Button title='Apply' variant={"outline-success"} size='sm'
+                        onClick={handleSaveResp}>Apply</Button>
+                <Button className={'m-3'} title='Cancel' variant={"outline-danger"} size='sm'
+                        onClick={() => dispatch({type: CANCEL_DO_PROCESS})}>Cancel</Button>
             </Form.Group>
         </Form>
     }
@@ -118,13 +140,20 @@ export default function Response({
                     <Form.Control as="textarea" rows={1} placeholder='Enter response here' required={true}
                                   onChange={e => onRespTextChange({
                                       ...responseToAdd,
-                                      stageId: stageId,
-                                      processId: processId,
-                                      prompt: prompt,
+                                      stageId: staticStage.id,
+                                      processId: process.id,
+                                      processTitle: process.title,
+                                      prompt: staticStage.textQuestion,
                                       responseText: e.target.value
                                   })}/>
 
                 </div>
+            </Form.Group>
+            <Form.Group>
+                <Button title='Apply' variant={"outline-success"} size='sm'
+                        onClick={handleSaveResp}>Apply</Button>
+                <Button className={'m-3'} title='Cancel' variant={"outline-danger"} size='sm'
+                        onClick={() => dispatch({type: CANCEL_DO_PROCESS})}>Cancel</Button>
             </Form.Group>
         </Form>
     }

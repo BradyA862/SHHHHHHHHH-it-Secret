@@ -31,8 +31,7 @@ export default function AddMultChoiceStage({
         <Form.Control placeholder={'prompt'} onChange={event => setStage({...stage, prompt: event.target.value})}/>
         <Form.Control placeholder={'answer 1'} onChange={event => setStage({...stage, answer1: event.target.value})}/>
         <Form.Control placeholder={'answer 2'} onChange={event => setStage({...stage, answer2: event.target.value})}/>
-        <Form.Control placeholder={'answer 2'} onChange={event => setStage({...stage, answer3: event.target.value})}/>
-        <Form.Control placeholder={'answer 2'} onChange={event => setStage({...stage, answer4: event.target.value})}/>
+        <Form.Control placeholder={'answer 3'} onChange={event => setStage({...stage, answer3: event.target.value})}/>
         <Button onClick={handleCancel}>Cancel</Button>
         <Button onClick={handleAdd}>Add</Button>
     </Form>
