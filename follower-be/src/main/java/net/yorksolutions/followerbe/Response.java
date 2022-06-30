@@ -42,6 +42,14 @@ public class Response {
         this.response = response;
     }
 
+    public Response(Long processId, Long stageId, String processTitle, String prompt, String response) {
+        this.processId = processId;
+        this.stageId = stageId;
+        this.processTitle = processTitle;
+        this.prompt = prompt;
+        this.response = response;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
